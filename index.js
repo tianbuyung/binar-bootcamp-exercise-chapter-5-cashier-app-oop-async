@@ -51,6 +51,30 @@ class Menu {
       });
     });
   }
+  // Delete and Update status of Menu by ID
+  deleteMenu(id) {
+    fs.readFile("./data.json", "utf-8", (err, data) => {
+      if (err) throw err;
+      const menus = JSON.parse(data);
+      menus.forEach((menu) => {
+        if (menu.id === id && menu.status === true) {
+          menu.status = false;
+        }
+      });
+      // console.log(menus);
+      fs.writeFile("./data.json", JSON.stringify(menus), (err) => {
+        if (err) throw err;
+        fs.readFile("./data.json", "utf-8", (err, data) => {
+          if (err) console.log("data tidak ditemukan");
+          const newMenus = JSON.parse(data);
+          const menusFiltered = newMenus.filter((menu) => {
+            return menu.status !== false;
+          });
+          console.log("Sisa menu yang tersedia adalah: ", menusFiltered);
+        });
+      });
+    });
+  }
 }
 
 const newMenu = new Menu({
@@ -62,3 +86,4 @@ const newMenu = new Menu({
 // newMenu.getPermanentListMenus();
 // newMenu.getListMenus();
 // newMenu.getDetailMenu(4);
+// newMenu.deleteMenu(8);
