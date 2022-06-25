@@ -19,6 +19,38 @@ class Menu {
       });
     });
   }
+  // Read all Menus
+  getPermanentListMenus() {
+    fs.readFile("./data.json", "utf-8", (err, data) => {
+      if (err) throw err;
+      console.log(JSON.parse(data));
+    });
+  }
+  // Read all Menus with status true
+  getListMenus() {
+    fs.readFile("./data.json", "utf-8", (err, data) => {
+      if (err) console.log("data tidak ditemukan");
+      const menus = JSON.parse(data);
+      const menusFiltered = menus.filter((menu) => {
+        return menu.status !== false;
+      });
+      console.log("List menu yang tersedia: ", menusFiltered);
+    });
+  }
+  // Read detail Menu with status true
+  getDetailMenu(id) {
+    fs.readFile("./data.json", "utf-8", (err, data) => {
+      if (err) throw err;
+      const menus = JSON.parse(data);
+      menus.forEach((menu) => {
+        if (menu.id === id && menu.status === true) {
+          console.log("Ini adalah menu: ", menu);
+        } else if (menu.id === id && menu.status === false) {
+          console.log("Menu tidak tersedia!");
+        }
+      });
+    });
+  }
 }
 
 const newMenu = new Menu({
@@ -26,4 +58,7 @@ const newMenu = new Menu({
   price: 14500,
   quantity: 3,
 });
-newMenu.addMenu();
+// newMenu.addMenu();
+// newMenu.getPermanentListMenus();
+// newMenu.getListMenus();
+// newMenu.getDetailMenu(4);
