@@ -175,17 +175,45 @@ class UpdateMenu extends Menu {
   }
 }
 
-const newMenu = new Menu({
-  name: "Ketoprak",
-  price: 13500,
-  quantity: 2,
-});
-// newMenu.addMenu();
-// newMenu.getPermanentListMenus();
-// newMenu.getListMenus();
-// newMenu.getDetailMenu();
-// newMenu.deleteMenu();
-const newPrice = new UpdateMenu({ quantity: 4, id: 9 });
-// newPrice.updateMenuPrice();
-// newPrice.updateMenuName();
-// newPrice.updateMenuQuantity();
+// Run Command with process.argv
+// 1. Get list Menu - node index.js 1
+if (Number(process.argv[2]) === 1) {
+  new Menu().getListMenus();
+}
+// 2. Get Detail Menu by ID - node index.js 2 [id]
+if (Number(process.argv[2]) === 2) {
+  new Menu({ id: Number(process.argv[3]) }).getDetailMenu();
+}
+// 3. Get Detail Menu by ID - node index.js 3 [name] [price] [quantity]
+if (Number(process.argv[2]) === 3) {
+  new Menu({
+    name: process.argv[3],
+    price: Number(process.argv[4]),
+    quantity: Number(process.argv[5]),
+  }).addMenu();
+}
+// 4. Delete Menu by ID - node index.js 4 [id]
+if (Number(process.argv[2]) === 4) {
+  new Menu({ id: Number(process.argv[3]) }).deleteMenu();
+}
+// 5. Update menu by price - node index.js 5 [price] [id]
+if (Number(process.argv[2]) === 5) {
+  new UpdateMenu({
+    price: Number(process.argv[3]),
+    id: Number(process.argv[4]),
+  }).updateMenuPrice();
+}
+// 6. Update menu by name - node index.js 6 [name] [id]
+if (Number(process.argv[2]) === 6) {
+  new UpdateMenu({
+    name: process.argv[3],
+    id: Number(process.argv[4]),
+  }).updateMenuName();
+}
+// 7. Update menu by name - node index.js 6 [quantity] [id]
+if (Number(process.argv[2]) === 7) {
+  new UpdateMenu({
+    quantity: process.argv[3],
+    id: Number(process.argv[4]),
+  }).updateMenuQuantity();
+}
